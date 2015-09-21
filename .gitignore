@@ -1,3 +1,12 @@
+# Unwanted folders
+build
+dist
+nbproject
+test
+
+# Unwanted files
+build.xml
+
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
