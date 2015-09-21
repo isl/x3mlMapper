@@ -48,9 +48,13 @@ If you want to use x3ml Engine for a specific x3ml file stored in eXist (see [3M
 
 Parameters:
 id= stored x3ml mapping file id 
+
 uuidSize= generated uuid size, default value is 2
+
 output= x3ml engine output type, default valus is "RDF/XML". Other values: "N-triples" or "Turtle"
+
 sourceFile = xml input source file as a string
+
 generator = generator policy file as a string
 
 Read javadoc for more details.
