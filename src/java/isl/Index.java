@@ -75,7 +75,6 @@ public class Index extends HttpServlet {
             }
         }
 
-
         Mapper map = new Mapper();
 
         try {
@@ -86,7 +85,9 @@ public class Index extends HttpServlet {
             }
             X3MLEngine engine = map.engine("http://" + serverIP + ":" + request.getLocalPort() + "/3MEditor/Services?id=" + id + "&output=text/xml&method=export");
             X3MLEngine.Output output = engine.execute(map.documentFromString(sourceFile), map.policy(generator, uuidSizeInt));
-
+            if (X3MLEngine.exceptionMessagesList.length() > 0) {
+                out.println(X3MLEngine.exceptionMessagesList.replaceAll("(?<!\\A)eu\\.delving\\.x3ml\\.X3MLEngine\\$X3MLException:", "\n$0"));
+            }
             if (outputFormat == null || outputFormat.equals("RDF/XML")) {
                 OutputStream os = new WriterOutputStream(out);
                 PrintStream ps = new PrintStream(os);
