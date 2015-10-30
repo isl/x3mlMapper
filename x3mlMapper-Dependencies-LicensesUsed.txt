@@ -27,7 +27,7 @@ This file is part of the x3mlMapper webapp.
 -------------------------------
 x3mlMapper project dependencies
 -------------------------------
-jars :
+gitHub Projects:
 
-x3ml-1.5-SNAPSHOT-exejar.jar : The Apache Software License, Version 2.0
+https://github.com/isl/x3ml : The Apache Software License, Version 2.0
 

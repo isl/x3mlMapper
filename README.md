@@ -30,7 +30,8 @@ x3mlMapper
 x3mlMapper is a webapp providing a single RESTful web services method to use [x3ml](https://github.com/delving/x3ml "x3ml") engine on xml input source files.
 
 ## Build - Deploy - Run
-Folders src, web and lib contain all the files needed to build the web app and create a war file.
+This project is a Maven project, providing all the libs in pom.xml.
+Folder src contains all the files needed to build the web app and create a war file.
 You may use any application server that supports war files. (Has been tested with Apache Tomcat versions 5,6,7,8).
 
 ## Configuration
