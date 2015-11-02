@@ -8,7 +8,13 @@
     <packaging>war</packaging>
 
     <name>x3mlMapper</name>
-
+    <licenses>
+        <license>
+            <name>EUPL v.1.1</name>
+            <url>http://ec.europa.eu/idabc/eupl</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -20,7 +26,7 @@
         </repository>
     </repositories>
     <dependencies>
-         <dependency>
+        <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
             <version>6.0</version>
