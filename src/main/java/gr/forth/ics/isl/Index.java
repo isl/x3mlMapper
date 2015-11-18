@@ -104,7 +104,8 @@ public class Index extends HttpServlet {
 
         } catch (X3MLEngine.X3MLException ex) {
             ex.printStackTrace(out);
-
+        } catch (Exception ex) {
+            ex.printStackTrace(out);
         }
 
         out.close();
