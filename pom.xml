@@ -35,7 +35,7 @@
         <dependency>
             <groupId>com.github.isl</groupId>
             <artifactId>x3ml</artifactId>
-            <version>-SNAPSHOT</version>
+            <version>1.7.1</version>
         </dependency>
     </dependencies>
 
