@@ -22,7 +22,7 @@
     <repositories>       
         <repository>
             <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
+            <url>https://jitpack.io</url>            
         </repository>
     </repositories>
     <dependencies>
@@ -35,7 +35,7 @@
         <dependency>
             <groupId>com.github.isl</groupId>
             <artifactId>x3ml</artifactId>
-            <version>1.7.1</version>
+            <version>-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
