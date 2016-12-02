@@ -32,6 +32,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -90,14 +92,14 @@ public class Index extends HttpServlet {
                 out.println(X3MLEngine.exceptionMessagesList.replaceAll("(?<!\\A)eu\\.delving\\.x3ml\\.X3MLEngine\\$X3MLException:", "\n$0"));
             }
             if (outputFormat == null || outputFormat.equals("RDF/XML")) {
-                OutputStream os = new WriterOutputStream(out);
-                PrintStream ps = new PrintStream(os);
+                String decodedStream = replaceUnicode(output.toString());
+                PrintStream ps = new PrintStream(decodedStream);
                 output.writeXML(ps);
             } else if (outputFormat.equals("N-triples")) {
-                out.println(output.toString());
+                out.println(replaceUnicode(output.toString()));
             } else if (outputFormat.equals("Turtle")) {
-                OutputStream os = new WriterOutputStream(out);
-                PrintStream ps = new PrintStream(os);
+                String decodedStream = replaceUnicode(output.toString());
+                PrintStream ps = new PrintStream(decodedStream);
                 output.write(ps, "text/turtle");
 
             }
@@ -109,6 +111,21 @@ public class Index extends HttpServlet {
         }
 
         out.close();
+
+    }
+
+    private String replaceUnicode(String data) {
+        Pattern p = Pattern.compile("\\\\u(\\p{XDigit}{4})");
+        Matcher m = p.matcher(data);
+        StringBuffer buf = new StringBuffer(data.length());
+        while (m.find()) {
+            String ch = String.valueOf((char) Integer.parseInt(m.group(1), 16));
+            m.appendReplacement(buf, Matcher.quoteReplacement(ch));
+        }
+        m.appendTail(buf);
+        System.out.println("*****************");
+        System.out.println(buf);
+        return buf.toString();
 
     }
 
