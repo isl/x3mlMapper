@@ -28,10 +28,15 @@
 package gr.forth.ics.isl;
 
 import eu.delving.x3ml.X3MLEngine;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.servlet.ServletException;
@@ -92,15 +97,25 @@ public class Index extends HttpServlet {
                 out.println(X3MLEngine.exceptionMessagesList.replaceAll("(?<!\\A)eu\\.delving\\.x3ml\\.X3MLEngine\\$X3MLException:", "\n$0"));
             }
             if (outputFormat == null || outputFormat.equals("RDF/XML")) {
-                String decodedStream = replaceUnicode(output.toString());
-                PrintStream ps = new PrintStream(decodedStream);
+                StringWriter tempWriter = new StringWriter();
+                OutputStream os = new WriterOutputStream(tempWriter, "UTF-8");
+                PrintStream ps = new PrintStream(os);
                 output.writeXML(ps);
+
+                String decoded = replaceUnicode(tempWriter.toString());
+                out.println(decoded);
+
             } else if (outputFormat.equals("N-triples")) {
                 out.println(replaceUnicode(output.toString()));
             } else if (outputFormat.equals("Turtle")) {
-                String decodedStream = replaceUnicode(output.toString());
-                PrintStream ps = new PrintStream(decodedStream);
+
+                StringWriter tempWriter = new StringWriter();
+                OutputStream os = new WriterOutputStream(tempWriter, "UTF-8");
+                PrintStream ps = new PrintStream(os);
                 output.write(ps, "text/turtle");
+
+                String decoded = replaceUnicode(tempWriter.toString());
+                out.println(decoded);
 
             }
 
