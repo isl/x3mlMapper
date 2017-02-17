@@ -20,9 +20,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <repositories>       
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>            
+       <repository>
+            <id>FORTH-ICS-maven</id>
+            <name>FORTH-ICS maven repository</name>
+            <url>http://www.ics.forth.gr/isl/maven/</url>
         </repository>
     </repositories>
     <dependencies>
@@ -33,10 +34,10 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.isl</groupId>
-            <artifactId>x3ml</artifactId>
-            <version>-SNAPSHOT</version>
-        </dependency>
+		<groupId>gr.forth.ics.isl</groupId>
+		<artifactId>x3ml-engine</artifactId>
+		<version>1.7.3</version>
+    </dependency>
     </dependencies>
 
     <build>

@@ -90,7 +90,7 @@ public class Index extends HttpServlet {
             if (serverIP.equals("0:0:0:0:0:0:0:1")) {//Localhost
                 serverIP = "localhost";
             }
-            System.out.println("http://" + serverIP + ":" + request.getLocalPort() + "/3MEditor/Services?id=" + id + "&output=text/xml&method=export");
+            System.out.println("http://" + serverIP + ":" + request.getLocalPort() + "/3MEditor/Services?id=" + id + "&output=text/xml&method=export");           
             X3MLEngine engine = map.engine("http://" + serverIP + ":" + request.getLocalPort() + "/3MEditor/Services?id=" + id + "&output=text/xml&method=export");
             X3MLEngine.Output output = engine.execute(map.documentFromString(sourceFile), map.policy(generator, uuidSizeInt));
             if (X3MLEngine.exceptionMessagesList.length() > 0) {
@@ -138,8 +138,6 @@ public class Index extends HttpServlet {
             m.appendReplacement(buf, Matcher.quoteReplacement(ch));
         }
         m.appendTail(buf);
-        System.out.println("*****************");
-        System.out.println(buf);
         return buf.toString();
 
     }
