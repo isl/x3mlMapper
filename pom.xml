@@ -4,7 +4,7 @@
 
     <groupId>Forth-ICS</groupId>
     <artifactId>x3mlMapper</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
     <packaging>war</packaging>
 
     <name>x3mlMapper</name>
@@ -19,12 +19,12 @@
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    <repositories>       
-       <repository>
-            <id>FORTH-ICS-maven</id>
-            <name>FORTH-ICS maven repository</name>
-            <url>http://www.ics.forth.gr/isl/maven/</url>
-        </repository>
+    <repositories>  
+        <repository>
+            <id>FORTH-ISL-releases</id>
+            <name>FORTH ISL Nexus repository - Releases</name>
+            <url>http://www.ics.forth.gr/isl/maven-releases/</url>
+        </repository>            
     </repositories>
     <dependencies>
         <dependency>
@@ -34,10 +34,10 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-		<groupId>gr.forth.ics.isl</groupId>
-		<artifactId>x3ml-engine</artifactId>
-		<version>1.7.3</version>
-    </dependency>
+            <groupId>gr.forth.ics.isl</groupId>
+            <artifactId>x3ml-engine</artifactId>
+            <version>1.7.5</version>
+        </dependency>
     </dependencies>
 
     <build>
