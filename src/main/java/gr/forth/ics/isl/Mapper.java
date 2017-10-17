@@ -66,12 +66,16 @@ public class Mapper {
     public InputStream stringResource(String content) {
         String encoding = getEncodingFromXML(content);
         InputStream stream = null;
-        if (encoding.equals("ASCII")) {
-            stream = new ByteArrayInputStream(content.getBytes(StandardCharsets.US_ASCII));
-        } else if (encoding.equals("ISO-8859-1")) {
-            stream = new ByteArrayInputStream(content.getBytes(StandardCharsets.ISO_8859_1));
-        } else {
+        if (encoding == null) {
             stream = new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8));
+        } else {
+            if (encoding.equals("ASCII")) {
+                stream = new ByteArrayInputStream(content.getBytes(StandardCharsets.US_ASCII));
+            } else if (encoding.equals("ISO-8859-1")) {
+                stream = new ByteArrayInputStream(content.getBytes(StandardCharsets.ISO_8859_1));
+            } else {
+                stream = new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8));
+            }
         }
         return stream;
     }
@@ -103,7 +107,7 @@ public class Mapper {
     }
 
     private String getEncodingFromXML(String content) {
-        String ResultString = null;
+        String ResultString = "";
         try {
             Pattern regex = Pattern.compile("(?<=encoding=\")[^\"]*(?=\"\\?)", Pattern.MULTILINE);
             Matcher regexMatcher = regex.matcher(content);
