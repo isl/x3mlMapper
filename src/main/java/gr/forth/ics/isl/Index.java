@@ -28,15 +28,11 @@
 package gr.forth.ics.isl;
 
 import eu.delving.x3ml.X3MLEngine;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.servlet.ServletException;
@@ -71,7 +67,7 @@ public class Index extends HttpServlet {
         String generator = request.getParameter("generator");
         String uuidSize = request.getParameter("uuidSize");
         String outputFormat = request.getParameter("output");
-
+        
         int uuidSizeInt = 2;
 
         if (uuidSize != null) {
@@ -90,9 +86,8 @@ public class Index extends HttpServlet {
             if (serverIP.equals("0:0:0:0:0:0:0:1")) {//Localhost
                 serverIP = "localhost";
             }
-            System.out.println("http://" + serverIP + ":" + request.getLocalPort() + "/3MEditor/Services?id=" + id + "&output=text/xml&method=export");           
             X3MLEngine engine = map.engine("http://" + serverIP + ":" + request.getLocalPort() + "/3MEditor/Services?id=" + id + "&output=text/xml&method=export");
-            X3MLEngine.Output output = engine.execute(map.documentFromString(sourceFile), map.policy(generator, uuidSizeInt));
+            X3MLEngine.Output output = engine.execute(map.documentFromString(sourceFile), map.policy(generator, uuidSizeInt));            
             if (X3MLEngine.exceptionMessagesList.length() > 0) {
                 out.println(X3MLEngine.exceptionMessagesList.replaceAll("(?<!\\A)eu\\.delving\\.x3ml\\.X3MLEngine\\$X3MLException:", "\n$0"));
             }
@@ -138,7 +133,7 @@ public class Index extends HttpServlet {
             m.appendReplacement(buf, Matcher.quoteReplacement(ch));
         }
         m.appendTail(buf);
-        return buf.toString();
+                return buf.toString();
 
     }
 

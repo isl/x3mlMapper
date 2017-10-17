@@ -31,13 +31,15 @@ import eu.delving.x3ml.X3MLEngine;
 import static eu.delving.x3ml.X3MLEngine.exception;
 import eu.delving.x3ml.X3MLGeneratorPolicy;
 import eu.delving.x3ml.engine.Generator;
-import static eu.delving.x3ml.engine.X3ML.Helper.x3mlStream;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Element;
 
@@ -47,12 +49,10 @@ import org.w3c.dom.Element;
  */
 public class Mapper {
 
-    public X3MLEngine engine(String url) {              
+    public X3MLEngine engine(String url) {
         List<String> errors = X3MLEngine.validate(urlResource(url));
         return X3MLEngine.load(urlResource(url));
     }
-    
-    
 
     public InputStream urlResource(String url) {
         try {
@@ -64,12 +64,19 @@ public class Mapper {
     }
 
     public InputStream stringResource(String content) {
-        InputStream stream = new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8));
+        String encoding = getEncodingFromXML(content);
+        InputStream stream = null;
+        if (encoding.equals("ASCII")) {
+            stream = new ByteArrayInputStream(content.getBytes(StandardCharsets.US_ASCII));
+        } else if (encoding.equals("ISO-8859-1")) {
+            stream = new ByteArrayInputStream(content.getBytes(StandardCharsets.ISO_8859_1));
+        } else {
+            stream = new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8));
+        }
         return stream;
     }
 
     public Generator policy(String content, int uuidSize) {
-        
         return X3MLGeneratorPolicy.load(stringResource(content), X3MLGeneratorPolicy.createUUIDSource(uuidSize));
     }
 
@@ -84,14 +91,28 @@ public class Mapper {
     public Element documentFromUrl(String url) {
         try {
             return documentBuilderFactory().newDocumentBuilder().parse(urlResource(url)).getDocumentElement();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw exception("Unable to parse " + url);
         }
     }
+
     public DocumentBuilderFactory documentBuilderFactory() {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         factory.setNamespaceAware(true);
         return factory;
+    }
+
+    private String getEncodingFromXML(String content) {
+        String ResultString = null;
+        try {
+            Pattern regex = Pattern.compile("(?<=encoding=\")[^\"]*(?=\"\\?)", Pattern.MULTILINE);
+            Matcher regexMatcher = regex.matcher(content);
+            if (regexMatcher.find()) {
+                ResultString = regexMatcher.group();
+            }
+            return ResultString;
+        } catch (PatternSyntaxException ex) {
+            return null;
+        }
     }
 }
