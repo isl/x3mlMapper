@@ -28,6 +28,10 @@ This file is part of the x3mlMapper webapp.
 
 -->
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+    <context-param>
+        <param-name>editorName</param-name>
+        <param-value>3MEditor</param-value>
+    </context-param>
     <servlet>
         <servlet-name>Index</servlet-name>
         <servlet-class>gr.forth.ics.isl.Index</servlet-class>
