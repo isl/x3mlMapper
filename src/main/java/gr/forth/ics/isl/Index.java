@@ -63,7 +63,7 @@ public class Index extends HttpServlet {
 
         String id = request.getParameter("id");
         String sourceFile = request.getParameter("sourceFile");
-//        String sourceFilename = request.getParameter("sourceFilename");
+        String thesaurus = request.getParameter("thesaurus");
         String generator = request.getParameter("generator");
         String uuidSize = request.getParameter("uuidSize");
         String outputFormat = request.getParameter("output");
@@ -87,8 +87,16 @@ public class Index extends HttpServlet {
             if (serverIP.equals("0:0:0:0:0:0:0:1")) {//Localhost
                 serverIP = "localhost";
             }
-            X3MLEngine engine = map.engine("http://" + serverIP + ":" + request.getLocalPort() + "/"+editorName+"/Services?id=" + id + "&output=text/xml&method=export");
+            X3MLEngine engine;
+            String x3mlURL = "http://" + serverIP + ":" + request.getLocalPort() + "/" + editorName + "/Services?id=" + id + "&output=text/xml&method=export";
+           
+            if (thesaurus == null || thesaurus.length() == 0) {
+                engine = map.engine(x3mlURL);
+            } else {
+                engine = map.engine(x3mlURL,thesaurus);
+            }
             X3MLEngine.Output output = engine.execute(map.documentFromString(sourceFile), map.policy(generator, uuidSizeInt));
+
             if (X3MLEngine.exceptionMessagesList.length() > 0) {
                 out.println(X3MLEngine.exceptionMessagesList.replaceAll("(?<!\\A)eu\\.delving\\.x3ml\\.X3MLEngine\\$X3MLException:", "\n$0"));
             }

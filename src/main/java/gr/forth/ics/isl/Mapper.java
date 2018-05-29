@@ -41,6 +41,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 import javax.xml.parsers.DocumentBuilderFactory;
+import org.apache.jena.riot.Lang;
 import org.w3c.dom.Element;
 
 /**
@@ -49,9 +50,14 @@ import org.w3c.dom.Element;
  */
 public class Mapper {
 
-    public X3MLEngine engine(String url) {
-        List<String> errors = X3MLEngine.validate(urlResource(url));
-        return X3MLEngine.load(urlResource(url));
+    public X3MLEngine engine(String x3mlURL) {
+        List<String> errors = X3MLEngine.validate(urlResource(x3mlURL));
+        return X3MLEngine.load(urlResource(x3mlURL));
+    }
+
+    public X3MLEngine engine(String x3mlURL, String thesaurus) {
+        List<String> errors = X3MLEngine.validate(urlResource(x3mlURL));
+        return X3MLEngine.load(urlResource(x3mlURL), stringResource(thesaurus), Lang.TTL);
     }
 
     public InputStream urlResource(String url) {
