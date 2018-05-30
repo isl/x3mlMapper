@@ -23,7 +23,8 @@
         <repository>
             <id>FORTH-ISL-releases</id>
             <name>FORTH ISL Nexus repository - Releases</name>
-            <url>http://www.ics.forth.gr/isl/maven-releases/</url>
+            <url>http://www.ics.forth.gr/isl/maven-snapshots/</url>
+            <!--<url>http://www.ics.forth.gr/isl/maven-releases/</url>-->
         </repository>            
     </repositories>
     <dependencies>
@@ -36,7 +37,7 @@
         <dependency>
             <groupId>gr.forth.ics.isl</groupId>
             <artifactId>x3ml-engine</artifactId>
-            <version>1.8.5-1</version>
+            <version>1.9.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
