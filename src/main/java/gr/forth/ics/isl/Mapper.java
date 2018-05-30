@@ -57,7 +57,7 @@ public class Mapper {
 
     public X3MLEngine engine(String x3mlURL, String thesaurus) {
         List<String> errors = X3MLEngine.validate(urlResource(x3mlURL));
-        return X3MLEngine.load(urlResource(x3mlURL), stringResource(thesaurus), Lang.TTL);
+        return X3MLEngine.load(urlResource(x3mlURL), stringResource(thesaurus), getThesaurusFileFormat(thesaurus));
     }
 
     public InputStream urlResource(String url) {
@@ -67,6 +67,16 @@ public class Mapper {
             return null;
         }
 
+    }
+
+    public Lang getThesaurusFileFormat(String content) {
+        if (content.startsWith("@prefix")) {
+            return Lang.TTL;
+        } else if (content.startsWith("<rdf:RDF")) {
+            return Lang.RDFXML;
+        } else {
+            return Lang.NT;
+        }
     }
 
     public InputStream stringResource(String content) {
