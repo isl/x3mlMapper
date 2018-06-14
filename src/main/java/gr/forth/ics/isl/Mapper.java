@@ -36,6 +36,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -50,14 +51,28 @@ import org.w3c.dom.Element;
  */
 public class Mapper {
 
+    List<String> errors = new ArrayList<String>();
+
     public X3MLEngine engine(String x3mlURL) {
-        List<String> errors = X3MLEngine.validate(urlResource(x3mlURL));
+        errors = X3MLEngine.validate(urlResource(x3mlURL));
+        if (errors.size() > 0) {
+            return null;
+        }
+
         return X3MLEngine.load(urlResource(x3mlURL));
+
     }
 
     public X3MLEngine engine(String x3mlURL, String thesaurus) {
-        List<String> errors = X3MLEngine.validate(urlResource(x3mlURL));
+        errors = X3MLEngine.validate(urlResource(x3mlURL));
+        if (errors.size() > 0) {
+            return null;
+        }
         return X3MLEngine.load(urlResource(x3mlURL), stringResource(thesaurus), getThesaurusFileFormat(thesaurus));
+    }
+
+    public List<String> getEngineErrors() {
+        return errors;
     }
 
     public InputStream urlResource(String url) {

@@ -89,44 +89,56 @@ public class Index extends HttpServlet {
             }
             X3MLEngine engine;
             String x3mlURL = "http://" + serverIP + ":" + request.getLocalPort() + "/" + editorName + "/Services?id=" + id + "&output=text/xml&method=export";
-           
+
             if (thesaurus == null || thesaurus.length() == 0) {
                 engine = map.engine(x3mlURL);
             } else {
-                engine = map.engine(x3mlURL,thesaurus);
+                engine = map.engine(x3mlURL, thesaurus);
             }
-            X3MLEngine.Output output = engine.execute(map.documentFromString(sourceFile), map.policy(generator, uuidSizeInt));
 
-            if (X3MLEngine.exceptionMessagesList.length() > 0) {
-                out.println(X3MLEngine.exceptionMessagesList.replaceAll("(?<!\\A)eu\\.delving\\.x3ml\\.X3MLEngine\\$X3MLException:", "\n$0"));
-            }
-            if (outputFormat == null || outputFormat.equals("RDF/XML")) {
-                StringWriter tempWriter = new StringWriter();
-                OutputStream os = new WriterOutputStream(tempWriter, "UTF-8");
-                PrintStream ps = new PrintStream(os);
-                output.writeXML(ps);
+            if (engine == null) {             
+                String errors = map.getEngineErrors().toString();
+                out.println("An error ocurred while validating X3ML mappings file: "+errors);
+            } else {
+                X3MLEngine.Output output = engine.execute(map.documentFromString(sourceFile), map.policy(generator, uuidSizeInt));
+                if (X3MLEngine.exceptionMessagesList.length() > 0) {
+                    out.println(X3MLEngine.exceptionMessagesList.replaceAll("eu\\.delving\\.x3ml\\.X3MLEngine\\$X3MLException:\\s", "\n").trim());
+                }
+                if (outputFormat == null || outputFormat.equals("RDF/XML")) {
+                    StringWriter tempWriter = new StringWriter();
+                    OutputStream os = new WriterOutputStream(tempWriter, "UTF-8");
+                    PrintStream ps = new PrintStream(os);
+                    output.writeXML(ps);
 
-                String decoded = replaceUnicode(tempWriter.toString());
-                out.println(decoded);
+                    String decoded = replaceUnicode(tempWriter.toString());
+                    out.println(decoded);
 
-            } else if (outputFormat.equals("N-triples")) {
-                out.println(replaceUnicode(output.toString()));
-            } else if (outputFormat.equals("Turtle")) {
+                } else if (outputFormat.equals("N-triples")) {
+                    out.println(replaceUnicode(output.toString()));
+                } else if (outputFormat.equals("Turtle")) {
 
-                StringWriter tempWriter = new StringWriter();
-                OutputStream os = new WriterOutputStream(tempWriter, "UTF-8");
-                PrintStream ps = new PrintStream(os);
-                output.write(ps, "text/turtle");
+                    StringWriter tempWriter = new StringWriter();
+                    OutputStream os = new WriterOutputStream(tempWriter, "UTF-8");
+                    PrintStream ps = new PrintStream(os);
+                    output.write(ps, "text/turtle");
 
-                String decoded = replaceUnicode(tempWriter.toString());
-                out.println(decoded);
+                    String decoded = replaceUnicode(tempWriter.toString());
+                    out.println(decoded);
 
+                }
             }
 
         } catch (X3MLEngine.X3MLException ex) {
-            ex.printStackTrace(out);
+            System.out.println("x3mlEx");
+            ex.printStackTrace();
+//            System.out.println(ex.getMessage());
+//            ex.printStackTrace(out);
+            out.println(ex.getMessage());
         } catch (Exception ex) {
-            ex.printStackTrace(out);
+            System.out.println("ex");
+            ex.printStackTrace();
+            out.println(ex.getMessage());
+
         }
 
         out.close();
