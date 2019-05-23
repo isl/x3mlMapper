@@ -100,7 +100,10 @@ public class Index extends HttpServlet {
                 String errors = map.getEngineErrors().toString();
                 out.println("An error ocurred while validating X3ML mappings file: "+errors);
             } else {
+//                System.out.println(map.documentFromString(sourceFile));
                 X3MLEngine.Output output = engine.execute(map.documentFromString(sourceFile), map.policy(generator, uuidSizeInt));
+//                System.out.println("OUT");
+//                System.out.println(output);
                 if (X3MLEngine.exceptionMessagesList.length() > 0) {
                     out.println(X3MLEngine.exceptionMessagesList.replaceAll("eu\\.delving\\.x3ml\\.X3MLEngine\\$X3MLException:\\s", "\n").trim());
                 }
