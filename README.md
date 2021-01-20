@@ -34,6 +34,17 @@ This project is a Maven project, providing all the libs in pom.xml.
 Folder src contains all the files needed to build the web app and create a war file.
 You may use any application server that supports war files. (Has been tested with Apache Tomcat versions 5,6,7,8).
 
+To build with Maven on Docker, create and attach to a container:
+
+```
+docker run --rm -it --name maven -v (pwd):/x3ml maven:latest bash
+```
+
+then navigate to `/x3ml` and execute
+```
+maven install
+```
+
 ## Configuration
 Just deploy the x3mlMapper war and you are good to go.
 
