@@ -27,10 +27,10 @@
  */
 package gr.forth.ics.isl;
 
-import eu.delving.x3ml.X3MLEngine;
-import static eu.delving.x3ml.X3MLEngine.exception;
-import eu.delving.x3ml.X3MLGeneratorPolicy;
-import eu.delving.x3ml.engine.Generator;
+import gr.forth.ics.isl.x3ml.X3MLEngine;
+import static gr.forth.ics.isl.x3ml.X3MLEngine.exception;
+import gr.forth.ics.isl.x3ml.X3MLGeneratorPolicy;
+import gr.forth.ics.isl.x3ml.engine.Generator;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
