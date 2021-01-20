@@ -27,7 +27,7 @@
  */
 package gr.forth.ics.isl;
 
-import eu.delving.x3ml.X3MLEngine;
+import gr.forth.ics.isl.x3ml.X3MLEngine;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
